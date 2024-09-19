@@ -1,17 +1,17 @@
-// Import web application framework.
+// import express web application framework.
 const express = require("express");
 
-// Initilize web application express framework with constant varable app.
+// initilize web application express framework with constant varable app.
 const app = express();
 
-// Middleware to all incoming json data.
+// middleware to accept all incoming json data.
 app.use(express.json());
 
-// Send home route to check if the server is working fine.
+// send home route to check if the server is working fine are not and ckecking global io is working or not.
 app.get("/", (req, res) => {
     global.io.to("0001").emit("message", { data: "This is sample message event" });
     return res.json({ status: true, status_code: 200, message: "Application api working fine" });
 })
 
-// Export app to server.js file to listen the port.
+// export app to server.js file to listen the port.
 module.exports = app;

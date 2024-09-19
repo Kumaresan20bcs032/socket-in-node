@@ -3,12 +3,12 @@ const { Server } = require("socket.io")
 
 const PORT = process.env?.PORT ?? 3000;
 
-// Start the port to listen the server.
+// start the port to listen the server.
 const server = app.listen(PORT, () => {
     console.log(`Server started at host http://localhost:${PORT}`);
 });
 
-// Configure the socket server according to your needs,
+// configure the socket server according to your needs,
 // in my case allowing all origins for GET and POST method only.
 const io = new Server(server, {
     cors: {
@@ -19,7 +19,7 @@ const io = new Server(server, {
 });
 
 
-// USe socket middleware to configure.
+// use socket middleware to configure.
 io.use((socket, next) => {
 
     // use socket.handshake.query.id method to get the trying to connecting socket users id.
@@ -38,16 +38,17 @@ io.use((socket, next) => {
 });
 
 
-// Listen the socket of connection event.
+// listen the socket of connection event.
 io.on("connection", (socket) => {
 
     console.log("socket connect user id:", socket.userId);
 
-    // Use io to send the connected user.
+    // use io to send the connected user.
     io.to(socket.userId).emit("message", { data: "This is sample message event" });
 
 });
 
+// configure global socket io for emit purpose.
 global.io = io;
 
 
